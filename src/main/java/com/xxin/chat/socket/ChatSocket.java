@@ -2,8 +2,6 @@ package com.xxin.chat.socket;
 
 import com.xxin.chat.entity.Message;
 import com.xxin.chat.util.JsonUtil;
-import com.xxin.chat.util.ResponseResult;
-import netscape.javascript.JSUtil;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
