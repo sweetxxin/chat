@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>gdpu在线报名系统</title>
+</head>
+<body>
+<div class="app"></div>
+<!-- 获取重置密码链接页面 -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">密码重置</div>
+                <div class="panel-body">
+                    <div class="alert alert-success"></div>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="email" class="col-md-4 control-label">E-Mail</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="text" class="form-control" name="email"  required>
+                                    <span class="help-block">
+                                        <strong></strong>
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="button" class="btn btn-primary" id="send">
+                                    发送密码重置链接
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    window.onload=function () {
+        $(".app").load("/common")
+    }
+// ajax 异步发送邮箱请求
+var email=document.getElementById('email');
+document.getElementById('send').onclick=function()
+{
+    document.getElementsByClassName("alert")[0].innerHTML="正在发送中...";
+    $.ajax({
+        url: '/update',
+        type: 'POST',
+        data: {
+            email: email.value,
+        },
+        success: function (res) {
+            console.log(res);
+            if (res=="用户不存在"){
+                document.getElementsByClassName("alert")[0].innerHTML="用户不存在";
+            }else{
+                 document.getElementsByClassName("alert")[0].innerHTML="发送成功";
+                 alert("链接已经发送到邮箱，注意查收");
+            }
+        }
+    })
+}
+</script>
+</body>
+</html>
