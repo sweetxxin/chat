@@ -23,4 +23,11 @@ prefix: https://pict.sweetxxin.top/
 appId: wx529782cff588f558
 appSecret: b98eaadf46db975c334be58f00c40d84
 server:
-  port: 8888
+  port: 443
+  ssl:
+    key-store: static/ssl/keystore.p12
+    key-alias: tomcat
+    key-password: sweetxxin
+    key-store-type: JKS
+http:
+  port: 80
