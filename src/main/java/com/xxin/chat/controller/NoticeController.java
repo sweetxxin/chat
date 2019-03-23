@@ -14,7 +14,7 @@ public class NoticeController {
     NoticeRepository noticeRepository;
 
     @GetMapping("/notice")
-    public List<Notice> getNotice(){
+    public List<Notice> getNotice() {
         return noticeRepository.getNotice();
     }
 }

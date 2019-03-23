@@ -1,5 +1,6 @@
 package com.xxin.chat.socket;
 
+
 import com.xxin.chat.entity.Message;
 import com.xxin.chat.util.JsonUtil;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,8 @@ public class ChatSocket {
     private Session session;
 
     /**
-     * 连接建立成功调用的方法*/
+     * 连接建立成功调用的方法
+     */
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
@@ -54,13 +56,14 @@ public class ChatSocket {
     /**
      * 收到客户端消息后调用的方法
      *
-     * @param message 客户端发送过来的消息*/
+     * @param message 客户端发送过来的消息
+     */
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("来自客户端的消息:" + message);
-        Message msg = JsonUtil.jsonToPojo(message,Message.class);
+        Message msg = JsonUtil.jsonToPojo(message, Message.class);
         for (ChatSocket item : webSocketSet) {
-            if(item.session.getId().equals(msg.getTo())){
+            if (item.session.getId().equals(msg.getTo())) {
                 try {
                     item.sendMessage(message);
                     break;
@@ -73,21 +76,22 @@ public class ChatSocket {
 
     /**
      * 发生错误时调用
-     * **/
-     @OnError
-     public void onError(Session session, Throwable error) {
-     System.out.println("发生错误");
-     error.printStackTrace();
-     }
-     public void sendMessage(String message) throws IOException {
-  //   this.session.getBasicRemote().sendText(message);
-     this.session.getAsyncRemote().sendText(message);
-     }
+     **/
+    @OnError
+    public void onError(Session session, Throwable error) {
+        System.out.println("发生错误");
+        error.printStackTrace();
+    }
+
+    public void sendMessage(String message) throws IOException {
+        //   this.session.getBasicRemote().sendText(message);
+        this.session.getAsyncRemote().sendText(message);
+    }
 
 
-     /**
-      * 群发自定义消息
-      * */
+    /**
+     * 群发自定义消息
+     */
     public static void sendInfo(String message) throws IOException {
         for (ChatSocket item : webSocketSet) {
             try {
@@ -103,7 +107,7 @@ public class ChatSocket {
     }
 
     public static synchronized void addOnlineCount() {
-       ChatSocket.onlineCount++;
+        ChatSocket.onlineCount++;
     }
 
     public static synchronized void subOnlineCount() {

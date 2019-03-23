@@ -16,11 +16,11 @@ import java.io.*;
 @RestController
 public class BasicInfoController {
 
-    private static  String avatarLocalPath;
+    private static String avatarLocalPath;
 
     static {
         try {
-            avatarLocalPath = ResourceUtils.getURL("classpath:").getPath()+"/static/avatar/";
+            avatarLocalPath = ResourceUtils.getURL("classpath:").getPath() + "/static/avatar/";
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -37,7 +37,7 @@ public class BasicInfoController {
             @RequestParam(value = "avatar") MultipartFile avatar,
             @RequestParam(value = "name") String name,
             @RequestParam(value = "gender") String gender,
-            @RequestParam(value = "sid",defaultValue = "无") String sid,
+            @RequestParam(value = "sid", defaultValue = "无") String sid,
             @RequestParam(value = "phone") String phone,
             @RequestParam(value = "klass") String klass,
             @RequestParam(value = "token") String token
@@ -45,7 +45,7 @@ public class BasicInfoController {
 
         Account account = accountRepository.findByToken(token);
         String filename = "";
-        String avatarUuid= "";
+        String avatarUuid = "";
 
         if (account == null) {
             System.out.println("错误，无此token：" + token);
@@ -55,7 +55,7 @@ public class BasicInfoController {
             try {
                 avatarUuid = Utils.getUuid();
                 File file = new File(avatarLocalPath);
-                if (!file.exists()){
+                if (!file.exists()) {
                     file.mkdirs();
                 }
                 filename = avatarLocalPath + avatarUuid + ".jpg";
@@ -90,7 +90,7 @@ public class BasicInfoController {
         }
 
 
-        return "{\"state\":\"0\",\"avatar\":\""+ prefix + avatarUuid + ".jpg\"}";
+        return "{\"state\":\"0\",\"avatar\":\"" + prefix + avatarUuid + ".jpg\"}";
     }
 
     @PostMapping(value = "/basic-without-avatar")

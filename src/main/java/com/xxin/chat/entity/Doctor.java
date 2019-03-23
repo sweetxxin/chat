@@ -18,11 +18,14 @@ public class Doctor {
     private String createAt;
     @Column(length = 19)
     private String updateAt;
+
     public Doctor() {
     }
+
     public String getWorkId() {
         return workId;
     }
+
     public void setWorkId(String workId) {
         this.workId = workId;
     }

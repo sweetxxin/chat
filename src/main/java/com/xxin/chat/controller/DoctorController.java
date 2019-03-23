@@ -16,9 +16,10 @@ import java.util.List;
 public class DoctorController {
     @Autowired
     private DoctorRepository doctorRepository;
+
     @GetMapping("/list")
-    public ResponseResult getDocList(@RequestParam("token")String token){
-        List<Doctor> doctors =  doctorRepository.findAll();
+    public ResponseResult getDocList(@RequestParam("token") String token) {
+        List<Doctor> doctors = doctorRepository.findAll();
         ResponseResult result = new ResponseResult();
         result.setData(doctors);
         result.setCode(200);

@@ -10,7 +10,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -19,13 +22,14 @@ import java.util.UUID;
 @RestController
 public class AccountController {
     @Value("${appId}")
-    private  String appId;
+    private String appId;
     @Value("${appSecret}")
-    private  String appSecret ;
+    private String appSecret;
     @Value("${prefix}")
     private String prefix;
     @Autowired
     private AccountRepository accountRepository;
+
     @GetMapping(value = "/login")
     public ResponseResult login(
             @RequestParam("code") String code
@@ -34,15 +38,15 @@ public class AccountController {
         Account account = new Account();
         WeChat weChat = getAuth(code);
         Optional<Account> accountOptional = accountRepository.findById(weChat.getOpenId());
-        if (accountOptional.isPresent()){//已打开小程序
-         if (accountOptional.get().getName()==null){//未注册
-             result.setCode(-1);
-             result.setMsg("未注册");
-             result.setData(accountOptional.get().getToken());
-         }else {
+        if (accountOptional.isPresent()) {//已打开小程序
+            if (accountOptional.get().getName() == null) {//未注册
+                result.setCode(-1);
+                result.setMsg("未注册");
+                result.setData(accountOptional.get().getToken());
+            } else {
 
-         }
-        }else {
+            }
+        } else {
             account.setOpenId(weChat.getOpenId());
             account.setSessionKey(weChat.getSessionKey());
             String uuid = UUID.randomUUID().toString();
@@ -54,11 +58,13 @@ public class AccountController {
         }
         return result;
     }
+
     @PostMapping("/register")
-    public ResponseResult register(@RequestParam("account") Account account){
+    public ResponseResult register(@RequestParam("account") Account account) {
         ResponseResult result = new ResponseResult();
         return result;
     }
+
     private WeChat getAuth(String code) throws IOException {
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + appSecret + "&js_code=" + code + "&grant_type=authorization_code";
         OkHttpClient okHttpClient = new OkHttpClient();

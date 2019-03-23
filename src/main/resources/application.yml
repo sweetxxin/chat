@@ -1,33 +1,89 @@
+server:
+  port: 8443
+  ssl:
+      key-store: classpath:static/ssl/1967364_www.sweetxxin.top.pfx
+      key-store-password: 735BpsEc
+      key-store-type: PKCS12
+http:
+    port: 8888
 spring:
-  profiles:
-    active: prod
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/chat?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/java
     username: root
     password:
   jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+
+  devtools:
+    remote:
+      restart:
+        enabled: true
+    restart:
+      additional-paths: src/main/java
+  freemarker:
+    charset: UTF-8
+    content-type: text/html
+    allow-request-override: false
+    cache: false
+    check-template-location: true
+    enabled: true
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    request-context-attribute: request
+    prefer-file-system-access: true
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+    settings:
+      template_update_delay: 0
+      default_encoding: UTF-8
+      number_format: 0.##########
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      classic_compatible: true
+      template_exception_handler: ignore
+  #thymeleaf 配置
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
-    mode: HTML
+    mode: HTML5
     encoding: UTF-8
     cache: false
     servlet:
       content-type: text/html
-  mvc:
-    static-path-pattern: /static/**
+   #i18n配置 供thymeleaf读取
+  messages:
+    basename: i18n/messages/messages
+# REDIS (RedisProperties)
+# Redis数据库索引（默认为0）
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+pagehelper:
+  auto-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count:countSql
+size : 1
 databaseName: chat
 prefix: https://pict.sweetxxin.top/
 appId: wx529782cff588f558
 appSecret: b98eaadf46db975c334be58f00c40d84
-server:
-  port: 443
-  ssl:
-    key-store: static/ssl/keystore.p12
-    key-alias: tomcat
-    key-password: sweetxxin
-    key-store-type: JKS
-http:
-  port: 80
