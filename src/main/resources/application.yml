@@ -20,14 +20,7 @@ spring:
     username: root
     password: root
   jpa:
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5Dialect
-
   devtools:
     remote:
       restart:

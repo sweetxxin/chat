@@ -48,6 +48,7 @@ public class AccountController {
             }
         } else {
             account.setOpenId(weChat.getOpenId());
+            System.out.println(weChat.getOpenId()+"这里这里");
             account.setSessionKey(weChat.getSessionKey());
             String uuid = UUID.randomUUID().toString();
             account.setToken(uuid);
