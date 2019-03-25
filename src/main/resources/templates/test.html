@@ -6,7 +6,6 @@
 
 <body>
 Welcome<br/>
-to<input id="to" type="text">内容
 <input id="text" type="text"/>
 <button onclick="send()">Send</button>
 <button onclick="closeWebSocket()">Close</button>
@@ -19,7 +18,7 @@ to<input id="to" type="text">内容
     var id = "";
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-        websocket = new WebSocket("wss://www.sweetxxin.top:8443/websocket");
+        websocket = new WebSocket("wss://localhost:8443/websocket?from=测试1&to=xxin");
     }
     else {
         alert('Not support websocket')
@@ -64,8 +63,8 @@ to<input id="to" type="text">内容
         var message = document.getElementById('text').value;
         msg = {
             "msg": message,
-            "from": id,
-            "to": document.getElementById("to").value,
+            "from": "测试1",
+            "to": "xxin" ,
             "type": "text"
         }
         console.log(msg)

@@ -5,6 +5,15 @@ public class Message {
     private String from;
     private String to;
     private String type;
+    private String chatId;
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
 
     public String getFrom() {
         return from;
